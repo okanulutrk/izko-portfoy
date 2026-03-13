@@ -14,7 +14,7 @@ from datetime import datetime
 from playwright.async_api import async_playwright
 
 # ──────────────────────────────────────────────
-# 💼  PORTFÖYÜNÜZ
+#   PORTFÖYÜNÜZ
 # Yeni/Eski ayrımı olan ürünler: (yeni_adet, eski_adet)
 # Tek fiyatlı ürünlerde eski_adet=0 bırakın.
 # Dolar/Euro için adet = kaç birim döviziniz var.
@@ -35,7 +35,7 @@ PORTFOY = {
 }
 
 # ──────────────────────────────────────────────
-# 🌐  VERİ ÇEKME
+#   VERİ ÇEKME
 # ──────────────────────────────────────────────
 async def kur_cek() -> dict:
     async with async_playwright() as p:
@@ -102,7 +102,7 @@ async def kur_cek() -> dict:
     }
 
 # ──────────────────────────────────────────────
-# 🧮  HESAPLAMA
+#   HESAPLAMA
 # ──────────────────────────────────────────────
 def parse(metin: str) -> float:
     try:
@@ -144,7 +144,7 @@ def hesapla(kurlar: dict) -> list:
     return satirlar
 
 # ──────────────────────────────────────────────
-# 🖨️  TERMİNAL RAPORU
+#   TERMİNAL RAPORU
 # ──────────────────────────────────────────────
 def rapor_yazdir(kurlar: dict, satirlar: list):
     t1, t2 = kurlar["t1"], kurlar["t2"]
@@ -158,19 +158,19 @@ def rapor_yazdir(kurlar: dict, satirlar: list):
     # ── Başlık ──
     print()
     cizgi("═")
-    print(f"{'📊  İZKO ALTIN PORTFÖY RAPORU':^{W}}")
+    print(f"{'  İZKO ALTIN PORTFÖY RAPORU':^{W}}")
     print(f"{'İzmir Kuyumcular Odası — Tavsiye Fiyatları':^{W}}")
     print(f"{zaman:^{W}}")
     cizgi("═")
 
     # ── Referans Kurlar ──
-    baslik("📌  REFERANS KURLAR")
+    baslik("  REFERANS KURLAR")
     for k in ["Has Altın", "Paketli Has", "Dolar", "Euro"]:
         v = t1.get(k, "-")
         print(f"  {k:<20} {v:>12} ₺")
 
     # ── Güncel Fiyatlar ──
-    baslik("💰  GÜNCEL FİYATLAR (SATIŞ)")
+    baslik("  GÜNCEL FİYATLAR (SATIŞ)")
     for k in ["22 Ayar","18 Ayar","14 Ayar","Gram Altın","Ata Altın"]:
         v = t1.get(k, "-")
         print(f"  {k:<20} {v:>12} ₺")
@@ -184,7 +184,7 @@ def rapor_yazdir(kurlar: dict, satirlar: list):
         print(f"  {isim:<20} {y+' ₺':>14} {e+' ₺':>14}")
 
     # ── Portföy Detayı ──
-    baslik("💼  PORTFÖY DETAYI")
+    baslik("  PORTFÖY DETAYI")
     print(f"  {'Ürün':<16} {'Adet':<18} {'Birim Fiyat':<22} {'Toplam':>12}")
     cizgi()
 
@@ -209,16 +209,16 @@ def rapor_yazdir(kurlar: dict, satirlar: list):
     print()
 
 # ──────────────────────────────────────────────
-# 🚀  ÇALIŞTIR
+#   ÇALIŞTIR
 # ──────────────────────────────────────────────
 async def main():
-    print("\n🔍 Veriler çekiliyor...")
+    print("\n Veriler çekiliyor...")
     try:
         kurlar   = await kur_cek()
         satirlar = hesapla(kurlar)
         rapor_yazdir(kurlar, satirlar)
     except Exception as e:
-        print(f"\n❌ Hata oluştu: {e}")
+        print(f"\n Hata oluştu: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())
